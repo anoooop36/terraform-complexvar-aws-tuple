@@ -1,12 +1,13 @@
-variable "access_key" {}
-variable "secret_key" {}
-
-variable "region" {
- type    = string
- default = "us-east-1"
+provider "aws" {
+ access_key = var.access_key
+ secret_key = var.secret_key
+ region     = var.region
 }
 
-variable "sampleTuple" {
-  type    = tuple([number,string,string])
-  default = [40, "Dev ebs volume using tuple", "Test ebs volume using tuple"]
+resource "aws_ebs_volume" "awsEbsExampleWithTuple" {
+  availability_zone = "us-east-1a"
+  size              = var.sampleTuple[0]
+  tags              = {
+                        Name = var.sampleTuple[1]
+                      }
 }
